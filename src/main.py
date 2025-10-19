@@ -1,6 +1,5 @@
-def main():
-    print("Hello from ml-worker-service!")
-
+def run():
+  pass
 
 if __name__ == "__main__":
-    main()
+  run()
