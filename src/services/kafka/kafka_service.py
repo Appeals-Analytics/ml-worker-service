@@ -53,6 +53,21 @@ class KafkaService:
       async for message in self.consumer:
           yield message.value
 
+  async def consume_and_process(self: Self):
+      """Consume messages and save them to the database"""
+      if not self.consumer:
+          raise RuntimeError("Consumer not initialized. Call start_consumer() first.")
+
+      async for message in self.consumer:
+          if not message.topic == kafka_settings.topic_in:
+              continue
+
+          try:
+              message_data = json.loads(message.value)
+              print(message_data)
+          except Exception as e:
+              print(f"Error processing Kafka message: {e}")
+
   async def close(self: Self):
     
       if self.producer:
