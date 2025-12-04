@@ -1,7 +1,7 @@
 from .config import qwen_settings
-from .qwen_service import qwen_service
+from .service import qwen_service
 
 __all__ = [
-  "qwen_service",
+  "service",
   "qwen_settings"
 ]
