@@ -1,8 +1,11 @@
 import json
 from typing import AsyncGenerator, Optional, Self
-from aiokafka import AIOKafkaProducer, AIOKafkaConsumer
+from aiokafka import AIOKafkaProducer, AIOKafkaConsumer, TopicPartition
 
 from services.kafka.config import kafka_settings
+from services.ml import ml_pipeline
+from schemas.base_message import MessageSchema
+
 
 class KafkaService:
   def __init__(self: Self):
@@ -32,6 +35,8 @@ class KafkaService:
           "sasl_plain_username": kafka_settings.sasl_plain_username.get_secret_value(),
           "sasl_plain_password": kafka_settings.sasl_plain_password.get_secret_value(),
           "group_id": kafka_settings.consumer_group_id,
+          "enable_auto_commit": False,
+          "auto_offset_reset": "earliest",
           "value_deserializer": lambda v: json.loads(v.decode('utf-8')),
       }
 
@@ -54,19 +59,31 @@ class KafkaService:
           yield message.value
 
   async def consume_and_process(self: Self):
-      """Consume messages and save them to the database"""
+      """Consume messages and process with ML pipeline"""
       if not self.consumer:
           raise RuntimeError("Consumer not initialized. Call start_consumer() first.")
 
       async for message in self.consumer:
-          if not message.topic == kafka_settings.topic_in:
+          if message.topic != kafka_settings.topic_in:
               continue
 
+          tp = TopicPartition(message.topic, message.partition)
+          
           try:
-              message_data = json.loads(message.value)
-              print(message_data)
+              data = json.loads(message.value)
+              input_message = MessageSchema(**data)
+              result = await ml_pipeline.process(input_message, source="kafka")
+
+              await self.send_message(
+                  kafka_settings.topic_out, 
+                  result.model_dump_json()
+              )
+              print(result.model_dump_json())
+
+              await self.consumer.commit({tp: message.offset + 1})
+              
           except Exception as e:
-              print(f"Error processing Kafka message: {e}")
+              print(f"❌ Error processing message (offset={message.offset}): {e}")
 
   async def close(self: Self):
     
