@@ -13,5 +13,5 @@ __all__ = [
   "CategoryLevel2Enum",
   "MessageProcessedSchema",
   "EmotionEnum",
-  "CategoriesResponse"
+  "CategoriesResponse",
 ]
