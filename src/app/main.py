@@ -5,6 +5,6 @@ app = FastAPI(
   title="ML Worker Service",
   description="Worker service for user inputs analyze service",
   lifespan=lifespan,
-  )
+)
 
 setup_cors(app)
