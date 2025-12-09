@@ -15,7 +15,7 @@ class SentimentDetector(BaseDetector):
 
   def detect(self, text: str) -> SentimentResult:
     label, score = self._predict(text)
-    sentiment_label = "_".join(label.lower().split(" "))
+    sentiment_label = label.lower()
     return SentimentResult(sentiment_label=sentiment_label, sentiment_score=round(score, 4))
 
 
