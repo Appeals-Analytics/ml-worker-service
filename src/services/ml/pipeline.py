@@ -61,6 +61,7 @@ class MLPipeline:
     cleaned_text = self.clean_text(text)
 
     lang_result, sentiment_result, emotion_result = await asyncify(self._run_ml_models)(cleaned_text)
+    
     categories = await self.categories.classify_categories(text)
 
     now = datetime.now()

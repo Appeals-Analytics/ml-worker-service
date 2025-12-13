@@ -7,7 +7,7 @@ class MLSettings(BaseSettings):
 
   language_model: str = "papluca/xlm-roberta-base-language-detection"
   sentiment_model: str = "cardiffnlp/twitter-xlm-roberta-base-sentiment"
-  emotion_model: str = "forxtears/airline-emotion-classifier"
+  emotion_model: str = "forxtears/airline-emotions"
 
   models_cache_dir: str = "./cache/models"
 
