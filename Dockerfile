@@ -16,6 +16,7 @@ COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 RUN useradd --create-home --shell /bin/bash appuser
 USER appuser
 WORKDIR /home/appuser/app
+RUN mkdir -p /home/appuser/.cache && chown -R appuser:appuser /home/appuser/.cache
 
 COPY --from=builder /app/ ./
 
