@@ -9,7 +9,7 @@ on:
       - main
 
 env:
-  SERVICE_NAME: 'ml-worker-service'
+  SERVICE_NAME: 'ml-worker'
   IMAGE_NAME: 'ml-worker-image'
   DOCKER_COMPOSE_PATH: '/home/vlolomironov/analytics/docker-compose.yml'
   DOCKERFILE_PATH: './'
