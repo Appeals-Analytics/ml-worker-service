@@ -14,13 +14,18 @@ FROM python:3.12-slim-trixie
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
 RUN useradd --create-home --shell /bin/bash appuser
-USER appuser
+
 WORKDIR /home/appuser/app
-RUN mkdir -p /home/appuser/.cache && chown -R appuser:appuser /home/appuser/.cache
 
-COPY --from=builder /app/ ./
+COPY --chown=appuser:appuser --from=builder /app/ ./
 
-ENV PATH="/home/appuser/app/.venv/bin:$PATH"
-ENV PYTHONUNBUFFERED=1
+RUN mkdir -p /home/appuser/.cache/huggingface && \
+  chown -R appuser:appuser /home/appuser/.cache
+
+ENV PATH="/home/appuser/app/.venv/bin:$PATH" \
+  PYTHONUNBUFFERED=1 \
+  HF_HOME="/home/appuser/.cache/huggingface"
+
+USER appuser
 
 CMD ["uv", "run", "src/main.py"]
