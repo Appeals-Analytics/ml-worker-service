@@ -3,7 +3,6 @@ from enum import Enum
 
 class EmotionEnum(Enum):
   ANGER = "anger"
-  AVERAGE = "average"
   FEAR = "fear"
   DISGUST = "disgust"
   JOY = "joy"
@@ -16,7 +15,6 @@ class EmotionEnum(Enum):
 
 EMOTION_TRANSLATIONS: dict[EmotionEnum, str] = {
   EmotionEnum.ANGER: "Гнев",
-  EmotionEnum.AVERAGE: "Средний",
   EmotionEnum.FEAR: "Страх",
   EmotionEnum.DISGUST: "Отвращение",
   EmotionEnum.JOY: "Радость",

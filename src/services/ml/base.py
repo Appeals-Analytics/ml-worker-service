@@ -35,7 +35,7 @@ class BaseDetector(ABC):
   def tokenizer(self) -> AutoTokenizer:
     if self._tokenizer is None:
       print(f"Loading tokenizer: {self.model_name}")
-      self._tokenizer = AutoTokenizer.from_pretrained(self.model_name)
+      self._tokenizer = AutoTokenizer.from_pretrained(self.model_name, use_fast=False)
     return self._tokenizer
 
   @property

@@ -6,8 +6,8 @@ class MLSettings(BaseSettings):
   model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
   language_model: str = "papluca/xlm-roberta-base-language-detection"
-  sentiment_model: str = "Niknik149/sentiment_true_cool"
-  emotion_model: str = "forxtears/airline-emotion-classifier"
+  sentiment_model: str = "cardiffnlp/twitter-xlm-roberta-base-sentiment"
+  emotion_model: str = "forxtears/airline-emotions"
 
   models_cache_dir: str = "./cache/models"
 

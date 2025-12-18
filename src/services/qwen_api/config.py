@@ -6,6 +6,10 @@ class QwenAPIConfig(BaseSettings):
   qwen_api_key: SecretStr
   qwen_api_base_url: str
   qwen_model: str
+  
+  openrouter_api_key: SecretStr
+  openrouter_base_url: str
+  openrouter_model: str
 
   model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
