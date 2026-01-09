@@ -82,6 +82,7 @@ class MLPipeline:
       emotion_score=emotion_result.emotion_score,
       category_level_1=categories.category_level_1,
       category_level_2=categories.category_level_2,
+      content_hash=message.content_hash
     )
 
 

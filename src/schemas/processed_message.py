@@ -30,3 +30,5 @@ class MessageProcessedSchema(BaseModel):
   category_level_2: List[CategoryLevel2Enum] = Field(
     ..., description="Secondary category classifications"
   )
+  
+  content_hash: str = Field(..., description="Content hash for filter unique")
